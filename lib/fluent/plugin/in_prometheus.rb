@@ -14,6 +14,7 @@ module Fluent::Plugin
     config_param :port, :integer, default: 24231
     config_param :metrics_path, :string, default: '/metrics'
     config_param :aggregated_metrics_path, :string, default: '/aggregated_metrics'
+    config_param :max_clients, :integer, default: 5
 
     desc 'Enable ssl configuration for the server'
     config_section :ssl, required: false, multi: false do
@@ -70,7 +71,7 @@ module Fluent::Plugin
       config = {
         BindAddress: @bind,
         Port: @port,
-        MaxClients: 5,
+        MaxClients: @max_clients,
         Logger: WEBrick::Log.new(STDERR, WEBrick::Log::FATAL),
         AccessLog: [],
       }
